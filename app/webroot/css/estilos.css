@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.titulo{
+	margin: 20px auto 30px auto;
+}
+
+#header a{
+	color: #337ab7;
+}
