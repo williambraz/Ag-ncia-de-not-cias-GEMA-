@@ -4,13 +4,9 @@
 
 <div class="col-xs-12">
     <p>Logado como: 
-        <?php if ($this->session->read('Auth.User.username') == ""){
-                echo "Visitante - ";
-                echo $this->Html->link('Login', array('controller' => 'users', 'action' => 'login'));
-            } else {
-                echo $this->session->read('Auth.User.username').' - ';
-                echo $this->Html->link('Logout', array('controller' => 'users', 'action' => 'logout'));
-            }
+        <?php 
+            echo $this->session->read('Auth.User.username').' - ';
+            echo $this->Html->link('Logout', array('controller' => 'users', 'action' => 'logout'));
         ;?>
     </p>
 </div>
@@ -25,6 +21,8 @@
             <th class="hidden-xs">Id</th>
             <th>Título</th>
             <th>Autor</th>
+            <th>Revisor</th>
+            <th>Publicador</th>
             <th>Seção</th>
             <th>Estado</th>
             <th class="hidden-xs">Data de Criação</th>
@@ -41,7 +39,19 @@
             <td>
                 <?php echo $this->Html->link($post['Post']['title'],array('controller' => 'posts', 'action' => 'view', $post['Post']['id'])); ?>
             </td>
-            <td><?php echo $post['User']['name']; ?></td>
+            <td><?php echo $post['Journalist']['name']; ?></td>
+            <td><?php 
+                if (empty($post['Reviser']['name']) && $this->session->read('Auth.User.role') == "revisor") 
+                    echo "escolher"; 
+                else 
+                    echo $post['Reviser']['name'];?>
+            </td>
+            <td><?php 
+                if (empty($post['Publisher']['name']) && $this->session->read('Auth.User.role') == "publicador") 
+                    echo "escolher"; 
+                else 
+                    echo $post['Publisher']['name'];?>
+            </td>
             <td><?php echo $post['Post']['section']; ?></td>
             <td><?php echo $post['Post']['state']; ?></td>
             <td class="hidden-xs"><?php echo $post['Post']['created']; ?></td>

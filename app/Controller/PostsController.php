@@ -58,28 +58,71 @@ class PostsController extends AppController {
         if (isset($user['role']) && $user['role'] === 'admin') {
             return true; // Admin pode acessar todas actions
         }
-        else
-        {
-            //todos podem adicionar artigos
-            if ($this->request->action === 'index') {
-                return true;
-            }
-
+        else if ($this->request->action === 'index') {
+            return true;
+        }
+        else if ($this->request->action === 'view') {
+            return true;
+        }
+        else if (isset($user['role']) && $user['role'] === 'jornalista') {
+            
             //todos podem adicionar artigos
             if ($this->request->action === 'add') {
                 return true;
             }
 
-            //admin e o criador podem alterar artigos
             if (in_array($this->request->action, ['edit', 'delete'])) {
                 $postId = (int)$this->request->params['pass'][0];
-                if ($this->Post->isOwnedBy($postId, $user['id'])) {
+                if ($this->Post->isAuthor($postId, $user['id'])) {
                     return true;
                 }
                 else{
                     $this->Session->setFlash('Apenas o criador do artigo pode alterá-lo.');
                     return false;
                 }
+            }
+        }
+        else if (isset($user['role']) && $user['role'] === 'revisor') {
+            
+            //todos podem adicionar artigos
+            if ($this->request->action === 'add') {
+                return false;
+            }
+
+            if (in_array($this->request->action, ['edit', 'delete'])) {
+                $postId = (int)$this->request->params['pass'][0];
+                if ($this->Post->isReviser($postId, $user['id'])) {
+                    return true;
+                }
+                else{
+                    $this->Session->setFlash('Apenas o revisor do artigo pode alterá-lo.');
+                    return false;
+                }
+            }
+        }
+        else if (isset($user['role']) && $user['role'] === 'publicador') {
+            
+            //todos podem adicionar artigos
+            if ($this->request->action === 'add') {
+                return false;
+            }
+
+            if (in_array($this->request->action, ['edit', 'delete'])) {
+                $postId = (int)$this->request->params['pass'][0];
+                if ($this->Post->isPublisher($postId, $user['id'])) {
+                    return true;
+                }
+                else{
+                    $this->Session->setFlash('Apenas o publicador do artigo pode alterá-lo.');
+                    return false;
+                }
+            }
+        }
+        //gerente
+        else
+        {
+            if ($this->request->action === 'index') {
+                return true;
             }
         }
 
