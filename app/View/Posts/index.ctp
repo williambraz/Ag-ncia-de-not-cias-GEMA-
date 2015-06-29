@@ -42,13 +42,13 @@
             <td><?php echo $post['Journalist']['name']; ?></td>
             <td><?php 
                 if (empty($post['Reviser']['name']) && $this->session->read('Auth.User.role') == "revisor") 
-                    echo "escolher"; 
+                    echo $this->Html->link('Escolher',array('controller' => 'posts', 'action' => 'select_reviser', '?' => array('id' => $post['Post']['id'], 'reviser_id' => $this->session->read('Auth.User.id')))); 
                 else 
                     echo $post['Reviser']['name'];?>
             </td>
             <td><?php 
                 if (empty($post['Publisher']['name']) && $this->session->read('Auth.User.role') == "publicador") 
-                    echo "escolher"; 
+                    echo $this->Html->link('Escolher',array('controller' => 'posts', 'action' => 'select_publisher', '?' => array('id' => $post['Post']['id'], 'publisher_id' => $this->session->read('Auth.User.id'))));
                 else 
                     echo $post['Publisher']['name'];?>
             </td>
@@ -65,5 +65,7 @@
 </div>
 
 <div class="text-center col-xs-12">
-    <?php echo $this->Html->link('Adicionar matéria', array('controller' => 'posts', 'action' => 'add'),array('class'=>'btn btn-primary'));?>
+    <?php if ($this->session->read('Auth.User.role') == "jornalista")
+        echo $this->Html->link('Adicionar matéria', array('controller' => 'posts', 'action' => 'add'),array('class'=>'btn btn-primary'));
+    ?>
 </div>

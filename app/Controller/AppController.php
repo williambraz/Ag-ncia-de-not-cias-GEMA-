@@ -42,6 +42,11 @@ class AppController extends Controller {
         )
     );
 
+    /*public function appError($error) {
+       // echo "Página não encontrada";
+        //$this->redirect(array('controller' => 'posts', 'action' => 'home'));
+    }*/
+
 	//permite que qualquer usuário veja qualquer view.
     function beforeFilter() {
     	//$this->Auth->unauthorizedRedirect=FALSE ;

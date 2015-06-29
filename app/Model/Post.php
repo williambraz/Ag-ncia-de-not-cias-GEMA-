@@ -1,12 +1,14 @@
 <?php
 class Post extends AppModel {
     public $name = 'Post';
+
+    public $actsAs = array('Containable');
     
     public $validate = array(
         'title' => array(
             'rule' => 'notEmpty'
         ),
-        'body' => array(
+        'content' => array(
             'rule' => 'notEmpty'
         )
     );
@@ -23,6 +25,13 @@ class Post extends AppModel {
         'Publisher' => array(
             'className' => 'User',
             'foreignKey' => 'publisher_id'
+        )
+    );
+
+    public $hasMany = array(
+        'Comment' => array(
+            'className' => 'Comment',
+            'foreignKey' => 'post_id'
         )
     );
 
