@@ -30,10 +30,16 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 		echo $this->Html->css('cake.generic');
 		echo $this->Html->css('bootstrap.min');
+		echo $this->Html->css('jquery.dataTables.min.css');
+		echo $this->Html->css('dataTables.responsive.css');
+		echo $this->Html->css('AdminLTE.min.css');
 		echo $this->Html->css('estilos.css');
 
 		echo $this->Html->script('jquery-2.1.4.min');
 		echo $this->Html->script('bootstrap.min');
+		echo $this->Html->script('jquery.dataTables.min.js');
+		echo $this->Html->script('dataTables.bootstrap.js');
+		echo $this->Html->script('dataTables.responsive.js');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');

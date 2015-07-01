@@ -7,3 +7,21 @@
 #header a{
 	color: #337ab7;
 }
+
+.btn-adicionar-materia{
+	text-align: right;
+	margin-bottom: -2px;
+}
+
+.clear{
+	clear:both;
+}
+
+.center{
+	margin: 0 auto;
+	text-align: center;
+}
+
+.filtros{
+	margin: 10px auto 0px auto;
+}

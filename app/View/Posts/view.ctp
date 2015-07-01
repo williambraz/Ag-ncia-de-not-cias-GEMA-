@@ -2,56 +2,83 @@
 
 <?php echo $this->element('menu') ?>
 
-<div class="col-xs-12">
-    <p>Logado como: 
+<div class="clear"></div>
+
+<div class="box box-primary">
+  <div class="box-header">
+    <h3 class="box-title">Conteúdo da Matéria</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+
+    <div>
+
+    	<h1><?php echo $post['Post']['title']?></h1>
+
+    	<p><small>Created: <?php echo $post['Post']['created']?></small></p>
+
+    	<p><?php echo $post['Post']['content']?></p>
+
+    </div>
+
+    <div>
+
         <?php 
-            echo $this->session->read('Auth.User.username').' - ';
-            echo $this->Html->link('Logout', array('controller' => 'users', 'action' => 'logout'));
-        ;?>
-    </p>
-</div>
+            if ($post['Post']['state'] == "proposta"){
+                echo "<h2>Aprovação do artigo</h2>";
+                if ($this->session->read('Auth.User.role') == "gerente"){
+                    echo $this->Html->link('Aprovar',array('controller' => 'posts', 'action' => 'approve', '?' => array('id' => $post['Post']['id'])),array('class' => 'btn btn-success')); 
+                    echo $this->Html->link('Arquivar',array('controller' => 'posts', 'action' => 'archive', '?' => array('id' => $post['Post']['id'])),array('class' => 'btn btn-danger')); 
+                 }
+            }
+            else if ($post['Post']['state'] == "arquivada"){
+                echo "<h2>Este artigo foi arquivado</h2>";
+            }
+            else{
+                echo "<h2>Este artigo foi aprovado</h2>";
+            }
+            
+        ?>
 
-<div class="col-xs-12">
+    </div>
 
-	<h1><?php echo $post['Post']['title']?></h1>
 
-	<p><small>Created: <?php echo $post['Post']['created']?></small></p>
+    <div>
 
-	<p><?php echo $post['Post']['content']?></p>
+    	<?php if (!empty($post['Comment'])) echo '<h2> Comentários </h2>'; ?>
 
-</div>
+        <?php foreach ($post['Comment'] as $comment): ?>
 
-<div class="col-xs-12">
+            <div class="post well">
+                <p><?php echo $comment['User']['username'] . ' - ' . $comment['created'];?></h1>
+                <p><?php echo $comment['content']; ?></p>
+            </div>
 
-	<?php if (!empty($post['Comment'])) echo '<h2> Comentários </h2>'; ?>
+        <?php endforeach; ?>
 
-    <?php foreach ($post['Comment'] as $comment): ?>
+    </div>
 
-        <div class="post well">
-            <p><?php echo $comment['User']['username'] . ' - ' . $comment['created'];?></h1>
-            <p><?php echo $comment['content']; ?></p>
-        </div>
+    <div>
 
-    <?php endforeach; ?>
+    	<h2> Adicionar Comentário </h2>
 
-</div>
+    	<?php
+    		//debug($post);
+    		echo $this->Form->Create('Comment',array('type'=>'post'));
+    		echo $this->Form->hidden('post_id',array('value'=>$post['Post']['id']));
+    		echo $this->Form->hidden('user_id',array('value'=>$this->session->read('Auth.User.id')));
+    		echo $this->Form->Input('content',array('label'=>'Escrever comentário:','rows'=>'3'));
+    		echo $this->Form->End('Comentar');
+    	?>
 
-<div class="col-xs-12">
+    <div>
 
-	<h2> Adicionar Comentário </h2>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    
+  </div><!-- box-footer -->
+</div><!-- /.box -->
 
-	<?php
-		//debug($post);
-		echo $this->Form->Create('Comment',array('type'=>'post'));
-		echo $this->Form->hidden('post_id',array('value'=>$post['Post']['id']));
-		echo $this->Form->hidden('user_id',array('value'=>$this->session->read('Auth.User.id')));
-		echo $this->Form->Input('content',array('label'=>'Escrever comentário:','rows'=>'3'));
-		echo $this->Form->End('Comentar');
-	?>
-
-<div>
-
-<button id='teste'>Teste</button>
+<!--<button id='teste'>Teste</button>
 
 <script>
 $(document).ready(function() {	
@@ -68,5 +95,5 @@ $(document).ready(function() {
         });
 	});
 });
-</script>
+</script>-->
 	

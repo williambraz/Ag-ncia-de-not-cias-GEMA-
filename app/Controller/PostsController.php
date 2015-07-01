@@ -48,6 +48,14 @@ class PostsController extends AppController {
 
         if ($this->request->is('get')) {
             $this->request->data = $this->Post->read();
+            $this->set('post', $this->Post->find( 'first', array (
+            'conditions' => array(
+                'Post.id' => $id
+            ),
+            'contain' => array(
+                'Comment' => array('User' => array('fields' => array('username')))
+            )
+        )));
         } else {
             if ($this->Post->save($this->request->data)) {
                 $this->Session->setFlash('A sua matéria foi atualizada.');
@@ -76,6 +84,32 @@ class PostsController extends AppController {
             $this->Session->setFlash("A sua matéria foi deletada");
             $this->redirect(array("action"=>"index"));
         }
+    }
+
+    function approve(){
+        if (!$this->request->is("get")){
+            throw new MethodNotAllowedException();
+        }
+
+        $id = $this->request->query['id'];
+
+        $this->Post->id = $id;
+        $this->Post->saveField('state','aprovada');
+        $this->Session->setFlash('A matéria foi aprovada');
+        $this->redirect(array("action"=>"index"));
+    }
+
+    function archive(){
+        if (!$this->request->is("get")){
+            throw new MethodNotAllowedException();
+        }
+
+        $id = $this->request->query['id'];
+
+        $this->Post->id = $id;
+        $this->Post->saveField('state','arquivada');
+        $this->Session->setFlash('A matéria foi arquivada');
+        $this->redirect(array("action"=>"index"));
     }
 
     function select_publisher(){
@@ -186,12 +220,21 @@ class PostsController extends AppController {
                 }
             }
         }
-        //gerente
-        else
-        {
-            if ($this->request->action === 'index') {
+        else if (isset($user['role']) && $user['role'] === 'gerente') {
+            
+            //todos podem adicionar artigos
+            if ($this->request->action === 'add') {
+                return false;
+            }
+
+            if ($this->request->action === 'approve') {
                 return true;
             }
+
+            if ($this->request->action === 'archive') {
+                return true;
+            }
+
         }
 
         return parent::isAuthorized($user);
