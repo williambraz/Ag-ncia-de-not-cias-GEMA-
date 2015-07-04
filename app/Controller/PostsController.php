@@ -3,13 +3,16 @@ class PostsController extends AppController {
     public $helpers = array('Html','Form','Session');
     public $components = array('RequestHandler');
     public $name = 'Posts';
+    public $uses = array('Post', 'Event');
 
     function index() {
         $this->set('posts', $this->Post->find('all'));
     }
 
     function home() {
-        $this->set('posts', $this->Post->find('all'));
+        $this->set('posts', $this->Post->find('all',array(
+            'order' => array('Post.created' => 'desc')
+        )));
     }
 
     function view($id){
@@ -21,8 +24,6 @@ class PostsController extends AppController {
                 $this->redirect(array('action' => 'view', $id));
            }
         }
-        //$this->Post->id = $id;
-        //$this->set('post', $this->Post->read());
         
         $this->set('post', $this->Post->find( 'first', array (
             'conditions' => array(
@@ -34,7 +35,7 @@ class PostsController extends AppController {
         )));
     }
 
-    public function comment(){
+    function comment(){
         $this->autoRender = false; 
         $this->layout = "ajax";
 
@@ -65,14 +66,27 @@ class PostsController extends AppController {
     }
 
     function add(){
+        $state = "proposta";
     	if ($this->request->is('post')){
-            $this->request->data['Post']['user_id'] = $this->Auth->user('id');
-            $this->request->data['Post']['state'] = "proposta";
+            $this->request->data['Post']['journalist_id'] = $this->Auth->user('id');
+            $this->request->data['Post']['state'] = $state;
     		if ($this->Post->save($this->request->data)){
-    			$this->Session->setFlash("A sua matéria foi salva");
+    
+                $this->saveEvent($this->Post->getLastInsertID(), $this->Auth->user('id'), $state);
+                $this->Session->setFlash("A sua matéria foi salva");
                 $this->redirect(array('action'=>'index'));
     		}
     	}
+    }
+
+    public function saveEvent($post_id, $user_id, $state){
+        $this->Event->create();
+        $event = array('Event' => array(
+          'post_id' => $post_id, 
+          'user_id' => $user_id,
+          'state' => $state
+        )); 
+        $this->Event->save($event);
     }
 
     function delete($id = null){
@@ -87,6 +101,8 @@ class PostsController extends AppController {
     }
 
     function approve(){
+        $state = 'aprovada';
+
         if (!$this->request->is("get")){
             throw new MethodNotAllowedException();
         }
@@ -94,12 +110,16 @@ class PostsController extends AppController {
         $id = $this->request->query['id'];
 
         $this->Post->id = $id;
-        $this->Post->saveField('state','aprovada');
+        $this->Post->saveField('state',$state);
         $this->Session->setFlash('A matéria foi aprovada');
+
+        $this->saveEvent($id, $this->Auth->user('id'), $state);
+
         $this->redirect(array("action"=>"index"));
     }
 
     function archive(){
+        $state = 'arquivada';
         if (!$this->request->is("get")){
             throw new MethodNotAllowedException();
         }
@@ -107,8 +127,29 @@ class PostsController extends AppController {
         $id = $this->request->query['id'];
 
         $this->Post->id = $id;
-        $this->Post->saveField('state','arquivada');
+        $this->Post->saveField('state',$state);
         $this->Session->setFlash('A matéria foi arquivada');
+
+        $this->saveEvent($id, $this->Auth->user('id'), $state);
+
+        $this->redirect(array("action"=>"index"));
+    }
+
+    function publish(){
+        $state = 'publicada';
+
+        if (!$this->request->is("get")){
+            throw new MethodNotAllowedException();
+        }
+
+        $id = $this->request->query['id'];
+
+        $this->Post->id = $id;
+        $this->Post->saveField('state',$state);
+        $this->Session->setFlash('A matéria foi publicada');
+
+        $this->saveEvent($id, $this->Auth->user('id'), $state);
+
         $this->redirect(array("action"=>"index"));
     }
 
@@ -144,7 +185,7 @@ class PostsController extends AppController {
 
     //Nós estamos sobreescrevendo a chamada do isAuthorized() do AppController e 
     //internamente verificando na classe pai se o usuário está autorizado.
-    public function isAuthorized($user) {
+    function isAuthorized($user) {
 
         if (isset($user['role']) && $user['role'] === 'admin') {
             return true; // Admin pode acessar todas actions
@@ -206,6 +247,10 @@ class PostsController extends AppController {
             }
 
             if ($this->request->action === 'select_publisher') {
+                return true;
+            }
+
+            if ($this->request->action === 'publish') {
                 return true;
             }
 

@@ -6,15 +6,15 @@
 
 <div class="col-xs-12">
 
-        <?php foreach ($posts as $post): ?>
-
+    <?php foreach ($posts as $post): ?>
+    	<?php if ($post['Post']['state'] == 'publicada'){ ?>
             <div class="post well">
                 <h1><?php echo $post['Post']['title']; ?></h1>
                 <small><?php echo $post['Journalist']['name']; ?> - <?php echo $post['Post']['created']; ?></small>
                 <p><?php echo $post['Post']['section']; ?></p>
                 <p><?php echo $post['Post']['content']; ?></p>
             </div>
-
-        <?php endforeach; ?>
+		<?php } ?>
+    <?php endforeach; ?>
 
 </div>

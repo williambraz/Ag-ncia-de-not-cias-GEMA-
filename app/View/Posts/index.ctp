@@ -32,6 +32,7 @@
                     <th>Data de Criação</th>
                     <th class="all">Editar</th>
                     <th class="all">Deletar</th>
+                    <th class="all">Eventos</th>
                 </tr>
             </thead>
 
@@ -62,13 +63,13 @@
                     </td>
                     <td><?php echo $post['Journalist']['name']; ?></td>
                     <td><?php 
-                        if (empty($post['Reviser']['name']) && $this->session->read('Auth.User.role') == "revisor") 
+                        if (empty($post['Reviser']['name']) && ($this->session->read('Auth.User.role') == "revisor") && ($post['Post']['state'] == "proposta"))  
                             echo $this->Html->link('Escolher',array('controller' => 'posts', 'action' => 'select_reviser', '?' => array('id' => $post['Post']['id'], 'reviser_id' => $this->session->read('Auth.User.id')))); 
                         else 
                             echo $post['Reviser']['name'];?>
                     </td>
                     <td><?php 
-                        if (empty($post['Publisher']['name']) && $this->session->read('Auth.User.role') == "publicador") 
+                        if (empty($post['Publisher']['name']) && ($this->session->read('Auth.User.role') == "publicador") && ($post['Post']['state'] == "aprovada"))
                             echo $this->Html->link('Escolher',array('controller' => 'posts', 'action' => 'select_publisher', '?' => array('id' => $post['Post']['id'], 'publisher_id' => $this->session->read('Auth.User.id'))));
                         else 
                             echo $post['Publisher']['name'];?>
@@ -79,6 +80,8 @@
                     <td><?php echo $this->Html->link('Editar', array('controller' => 'posts', 'action' => 'edit', $post['Post']['id']));?>
                     </td>
                     <td><?php echo $this->Form->postLink('Deletar', array('action' => 'delete', $post['Post']['id']));?></td>
+                    <td><?php echo $this->Form->postLink('Eventos', array('controller' => 'events', 'action' => 'view', $post['Post']['id']));?></td>
+
                 </tr>
             <?php endforeach; ?>
             </tbody>

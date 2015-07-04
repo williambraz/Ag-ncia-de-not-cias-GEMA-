@@ -16,7 +16,7 @@ class Post extends AppModel {
     public $belongsTo = array(
         'Journalist' => array(
             'className' => 'User',
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'journalist_id'
         ),
         'Reviser' => array(
             'className' => 'User',
@@ -32,6 +32,10 @@ class Post extends AppModel {
         'Comment' => array(
             'className' => 'Comment',
             'foreignKey' => 'post_id'
+        ),
+        'Event' => array(
+            'className' => 'Event',
+            'foreignKey' => 'post_id'
         )
     );
 
@@ -41,7 +45,7 @@ class Post extends AppModel {
 		return $this->find('first', array(
             'conditions' => array(
                     'Post.id' => $post,
-                    'Post.user_id' => $user)
+                    'Post.journalist_id' => $user)
         ));
     } 
 

@@ -23,18 +23,30 @@
     <div>
 
         <?php 
-            if ($post['Post']['state'] == "proposta"){
-                echo "<h2>Aprovação do artigo</h2>";
-                if ($this->session->read('Auth.User.role') == "gerente"){
-                    echo $this->Html->link('Aprovar',array('controller' => 'posts', 'action' => 'approve', '?' => array('id' => $post['Post']['id'])),array('class' => 'btn btn-success')); 
-                    echo $this->Html->link('Arquivar',array('controller' => 'posts', 'action' => 'archive', '?' => array('id' => $post['Post']['id'])),array('class' => 'btn btn-danger')); 
-                 }
+            if ($this->session->read('Auth.User.role') == "gerente"){
+                if ($post['Post']['state'] == "proposta"){
+                    if (!empty($post['Post']['reviser_id'])){
+                        
+                        echo "<h2>Aprovação do artigo</h2>";
+                        
+                        echo $this->Html->link('Aprovar',array('controller' => 'posts', 'action' => 'approve', '?' => array('id' => $post['Post']['id'])),array('class' => 'btn btn-success')); 
+                        echo $this->Html->link('Arquivar',array('controller' => 'posts', 'action' => 'archive', '?' => array('id' => $post['Post']['id'])),array('class' => 'btn btn-danger')); 
+                    }
+                    else{
+                        echo "<h2>O artigo necessita de um revisor</h2>"; 
+                    }
+                }
+                else if ($post['Post']['state'] == "arquivada"){
+                    echo "<h2>Este artigo foi arquivado</h2>";
+                }
+                else{
+                    echo "<h2>Este artigo foi aprovado</h2>";
+                }
             }
-            else if ($post['Post']['state'] == "arquivada"){
-                echo "<h2>Este artigo foi arquivado</h2>";
-            }
-            else{
-                echo "<h2>Este artigo foi aprovado</h2>";
+            else if ($this->session->read('Auth.User.role') == "publicador"){
+                if ($post['Post']['state'] == "aprovada"){
+                    echo $this->Html->link('Publicar',array('controller' => 'posts', 'action' => 'publish', '?' => array('id' => $post['Post']['id'])),array('class' => 'btn btn-success')); 
+                }
             }
             
         ?>
