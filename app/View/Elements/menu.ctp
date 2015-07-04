@@ -10,12 +10,26 @@
 			</button>
 		</div>
 		<ul class='nav navbar-nav collapse navbar-collapse'>
-			<li><?php echo $this->Html->link('Posts', array('controller' => 'posts', 'action' => 'index'));?></li>
-			<li><?php echo $this->Html->link('Users', array('controller' => 'users', 'action' => 'login'));?></li>
+			<?php if ($this->session->read('Auth.User.role') == "admin") : ?>
+				<li>
+					<a href='#' data-target='#' data-toggle='dropdown'>
+						<?php echo 'Usuários'?><span class="caret"></span>
+			        </a>
+					<ul class='dropdown-menu'>
+						<li>
+							<?php echo $this->Html->link('Listar', array('controller' => 'users', 'action' => 'index'));?>
+						</li>
+						<li>
+							<?php echo $this->Html->link('Adicionar', array('controller' => 'users', 'action' => 'add'));?>
+						</li>
+					</ul>
+				</li>
+			<?php endif ?>
+			<li><?php echo $this->Html->link('Matérias', array('controller' => 'posts', 'action' => 'index'));?></li>
 		</ul>
 		<ul class='nav navbar-nav collapse navbar-collapse navbar-right'>
 			<li>
-				<a href='about.html' data-target='#' data-toggle='dropdown'>
+				<a href='#' data-target='#' data-toggle='dropdown'>
 					<?php echo $this->session->read('Auth.User.username');?><span class="caret"></span>
 		        </a>
 				<ul class='dropdown-menu'>

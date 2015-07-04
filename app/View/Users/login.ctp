@@ -13,7 +13,7 @@
 		<?php echo $this->Form->create('User');?>
 		    <fieldset>
 		        <?php echo $this->Form->input('username',array('label'=>'Login:'));
-		        echo $this->Form->input('password',array('label'=>'Senha:'));
+		        echo $this->Form->input('password',array('label'=>'Senha:','required' => 'false'));
 		    ?>
 		    </fieldset>
 		<?php echo $this->Form->end(__('Logar'));?>

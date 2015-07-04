@@ -6,14 +6,30 @@ class User extends AppModel {
         'username' => array(
             'required' => array(
                 'rule' => array('notEmpty'),
-                'message' => 'Um login é necessário'
+                'message' => 'Um login é necessário.'
+            ),
+            'unique' => array(
+                'rule' => 'isUnique',
+                'required' => 'create',
+                'message' => 'Este nome de usuário já existe.'
             )
         ),
         'password' => array(
-            'required' => array(
-                'rule' => array('notEmpty'),
-                'message' => 'Um password é necessário'
-            )
+            'create_min' => array(
+                'on' => 'create',
+                'rule' => array('minLength', '6'),
+                'message' => 'O password deve ter no mínimo 6 caracteres.'
+            ),
+            'update_min' => array(
+                'on' => 'update',
+                'allowEmpty' => true,
+                'rule' => array('minLength', '6'),
+                'message' => 'O password deve ter no mínimo 6 caracteres.'
+            ),
+            'max' => array(
+                'rule' => array('maxLength', '15'),
+                'message' => 'O password deve ter no máximo 15 caracteres.'
+            ),
         ),
         'role' => array(
             'valid' => array(
@@ -26,6 +42,9 @@ class User extends AppModel {
 
     //encripta password
     public function beforeSave($options = array()) {
+        if (empty($this->data[$this->alias]['password'])){
+            unset($this->data[$this->alias]['password']);
+        }
 	    if (isset($this->data[$this->alias]['password'])) {
 	        $this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
 	    }
