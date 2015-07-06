@@ -1,7 +1,5 @@
 <!-- File: /app/View/Posts/view.ctp -->
 
-<?php echo $this->element('menu') ?>
-
 <div class="clear"></div>
 
 <div class="box box-primary">

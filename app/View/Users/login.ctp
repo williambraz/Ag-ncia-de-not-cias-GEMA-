@@ -1,7 +1,5 @@
 <!-- app/View/Users/login.ctp -->
 
-<?php echo $this->element('menu_login') ?>
-
 <div class="box box-primary">
 	  <div class="box-header">
 	    <h3 class="box-title">Login</h3>

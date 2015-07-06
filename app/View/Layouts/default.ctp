@@ -25,6 +25,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		<?php echo $cakeDescription ?>:
 		<?php echo $this->fetch('title'); ?>
 	</title>
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
 	<?php
 		echo $this->Html->meta('icon');
 
@@ -33,6 +34,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->css('jquery.dataTables.min.css');
 		echo $this->Html->css('dataTables.responsive.css');
 		echo $this->Html->css('AdminLTE.min.css');
+		echo $this->Html->css('redactor.css');
 		echo $this->Html->css('estilos.css');
 
 		echo $this->Html->script('jquery-2.1.4.min');
@@ -40,14 +42,24 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->script('jquery.dataTables.min.js');
 		echo $this->Html->script('dataTables.bootstrap.js');
 		echo $this->Html->script('dataTables.responsive.js');
+		echo $this->Html->script('redactor.min.js');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
 </head>
-<body>
-		<div class="container-fluid">
+<body>	
+		<?php if ($this->action == 'home' || $this->action == 'section') : ?>
+			<?php echo $this->element('menu_home') ?>
+			<div class="container">
+		<?php elseif ($this->action == 'login') : ?>
+			<?php echo $this->element('menu_login') ?>
+			<div class="container-fluid">
+		<?php else : ?>
+			<?php echo $this->element('menu') ?>
+			<div class="container-fluid">
+		<?php endif; ?>
 
 			<section class='row' id="content">
 
@@ -56,18 +68,11 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 			</section>
 
-			<footer class='row' id="footer">
-				<?php echo $this->Html->link(
-						$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
-						'http://www.cakephp.org/',
-						array('target' => '_blank', 'escape' => false, 'id' => 'cake-powered')
-					);
-				?>
-				<p>
-					<?php echo $cakeVersion; ?>
-				</p>
-			</footer>
 		</div>
+
+		<footer class='row' id="footer">
+			<span><strong> Projeto GEMA - PUC 2015</strong></span>
+		</footer>
 	<?php echo $this->element('sql_dump'); ?>
 </body>
 </html>

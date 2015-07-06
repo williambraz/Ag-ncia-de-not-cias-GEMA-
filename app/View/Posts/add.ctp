@@ -1,7 +1,5 @@
 <!-- File: /app/View/Posts/add.ctp -->
 
-<?php echo $this->element('menu') ?>
-
 <div class="clear"></div>
 
 <div class="box box-primary">
@@ -11,8 +9,6 @@
   <div class="box-body">
 
 	<div>
-
-		<h1>Adicionar matéria</h1>
 		
 		<?php
 			
@@ -21,7 +17,7 @@
 			echo $this->Form->input('content', array('label'=>'Conteúdo', 'rows' => '3'));
 			echo $this->Form->input('section', array(
 			'label'=>'Seção:',
-			'options' => array('games' => 'Games', 'quadrinhos' => 'Quadrinhos', 'música' => 'Música', 'séries' => 'Séries e TV')
+			'options' => array('games' => 'games', 'quadrinhos' => 'quadrinhos', 'música' => 'musica', 'séries' => 'series')
 			));
 			echo $this->Form->end('Postar');
 			
@@ -34,3 +30,13 @@
     
   </div><!-- box-footer -->
 </div><!-- /.box -->
+
+<script type="text/javascript">
+  $(document).ready( function() {
+          
+      $('#PostContent').redactor({ 
+          focus: true
+      });            
+       
+  });
+</script>

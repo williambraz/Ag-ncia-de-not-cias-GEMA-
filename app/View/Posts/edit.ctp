@@ -1,7 +1,5 @@
 <!-- File: /app/View/Posts/edit.ctp -->
 
-<?php echo $this->element('menu') ?>
-
 <div class="clear"></div>
 
 <div class="box box-primary">
@@ -42,3 +40,13 @@
     
   </div><!-- box-footer -->
 </div><!-- /.box -->
+
+<script type="text/javascript">
+  $(document).ready( function() {
+          
+      $('#PostContent').redactor({ 
+          focus: true
+      });            
+       
+  });
+</script>

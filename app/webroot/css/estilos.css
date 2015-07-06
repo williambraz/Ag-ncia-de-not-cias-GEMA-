@@ -25,3 +25,56 @@
 .filtros{
 	margin: 10px auto 0px auto;
 }
+
+.navbar-default, .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+  background-color: #333;
+}
+
+.dropdown-menu {
+  background-color: #333;
+  border-color: #333;
+}
+
+.dropdown-menu li > a:hover, .dropdown-menu li > a:focus, .dropdown-submenu:hover > a{
+	background-image: none;
+	background-color: #000;
+}
+
+.home_post:not(:last-child){
+	padding-bottom: 15px;
+}
+
+.home_post p{
+	margin-left:10px;
+}
+
+.home_post .home_section{
+	background: #333;
+	color: #fad100;
+	padding: 10px;
+	text-transform: uppercase;
+}
+
+.home_post .home_content{
+	margin-left:10px;
+}
+
+.home_post .home_footer{
+	margin-left:10px;
+	color: #000;
+}
+
+
+#header a {
+  color: #fad100;
+}
+
+#footer{
+	text-align: center;
+	padding: 20px 0;
+	background-color: #333;
+}
+
+#footer span{
+	color: #fad100;
+}

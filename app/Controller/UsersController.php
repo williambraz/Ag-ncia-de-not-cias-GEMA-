@@ -8,6 +8,9 @@ class UsersController extends AppController {
     }
 
     public function login() {
+        if (!empty($this->Session->read('Auth.User'))){
+            $this->redirect(array("controller"=>"posts",'action' => 'index'));
+        }
         if ($this->request->is('post')){ 
             if ($this->Auth->login()) {
                 $this->redirect(array("controller"=>"posts",'action' => 'index'));
@@ -80,5 +83,29 @@ class UsersController extends AppController {
         }
         $this->Session->setFlash(__('O usuário não pode ser deletado.'));
         $this->redirect(array('controller' => 'users','action' => 'index'));
+    }
+
+    //internamente verificando na classe pai se o usuário está autorizado.
+    function isAuthorized($user) {
+
+        if (isset($user['role']) && $user['role'] === 'admin') {
+            return true; // Admin pode acessar todas actions
+        }
+        else if ($this->request->action === 'edit') {
+            $userId = (int)$this->request->params['pass'][0];
+            if ($userId == $this->Session->read('Auth.User.id')){
+                return true;
+            }
+            else{
+                $this->Session->setFlash('O usuário apenas pode alterar os seus próprios dados.');
+                return false;
+            }
+            return true;
+        }
+        else{
+            return false;
+        }
+
+        return parent::isAuthorized($user);
     }
 }

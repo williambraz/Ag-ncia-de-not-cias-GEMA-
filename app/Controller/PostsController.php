@@ -11,7 +11,18 @@ class PostsController extends AppController {
 
     function home() {
         $this->set('posts', $this->Post->find('all',array(
-            'order' => array('Post.created' => 'desc')
+            'order' => array('Post.created' => 'desc'),
+            'conditions' => array('Post.state' => 'publicada')
+        )));
+    }
+
+    function section($section = null) {
+        $this->set('posts', $this->Post->find('all',array(
+            'order' => array('Post.created' => 'desc'),
+            'conditions' => array(
+                'Post.section' => $section,
+                'Post.state' => 'publicada'
+            )
         )));
     }
 

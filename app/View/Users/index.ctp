@@ -1,7 +1,5 @@
 <!-- app/View/Users/index.ctp -->
 
-<?php echo $this->element('menu') ?>
-
 <div class="box box-primary">
 	  <div class="box-header">
 	    <h3 class="box-title">Usuários</h3>

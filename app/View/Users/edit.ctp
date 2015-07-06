@@ -1,7 +1,5 @@
 <!-- File: /app/View/Users/edit.ctp -->
 
-<?php echo $this->element('menu') ?>
-
 <div class="clear"></div>
 
 <div class="box box-primary">

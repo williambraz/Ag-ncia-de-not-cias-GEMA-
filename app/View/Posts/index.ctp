@@ -1,7 +1,5 @@
 <!-- File: /app/View/Posts/index.ctp -->
 
-<?php echo $this->element('menu') ?>
-
 <div class='btn-adicionar-materia'>
     <?php if ($this->session->read('Auth.User.role') == "jornalista")
             echo $this->Html->link('Adicionar matéria', array('controller' => 'posts', 'action' => 'add'),array('class'=>'btn btn-primary'));
