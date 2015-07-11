@@ -66,4 +66,13 @@ class Post extends AppModel {
                     'Post.publisher_id' => $user)
         ));
     }
+
+    public function isManager($post, $section) { 
+
+        return $this->find('first', array(
+            'conditions' => array(
+                    'Post.id' => $post,
+                    'Post.section' => $section)
+        ));
+    }
 }

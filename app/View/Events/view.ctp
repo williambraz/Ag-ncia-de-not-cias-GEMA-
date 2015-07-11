@@ -1,7 +1,5 @@
 <!-- File: /app/View/Events/index.ctp -->
 
-<?php echo $this->element('menu') ?>
-
 <div class="clear"></div>
 
 <div class="box box-primary">
@@ -10,15 +8,25 @@
   </div><!-- /.box-header -->
   <div class="box-body">
 
-    <h2><?php echo $events[0]['Post']['title']; ?></h2>
-
-    <?php foreach ($events as $event): ?>
-        <div class="post well">
-            <p><?php echo $event['User']['username']; ?></p> 
-            <p><?php echo $event['Event']['state']; ?></p>
-            <p><?php echo $event['Event']['created']; ?></p>
-        </div>
-    <?php endforeach; ?>
+    <div class='basic_post'>
+      <div class='basic_section'>
+          <span><strong>
+          <?php echo 'Matéria: ' . $events[0]['Post']['title']; ?>
+          </strong></span>
+      </div>
+      <div class='basic_content'>
+          <?php foreach ($events as $event): ?>
+              <div class="post well">
+                <strong><?php echo $event['User']['username'];?></strong></br>
+                <small><?php $data = new DateTime($event['Event']['created']); echo $data->format('d/m/Y H:m:s');?></small>
+                <p><?php echo 'Estado atualizado : ' . $event['Event']['state']; ?></p>
+              </div>
+          <?php endforeach; ?>
+      </div>
+      <div class='basic_footer'>
+          
+      </div>
+    </div>
 
   </div><!-- /.box-body -->
   <div class="box-footer">

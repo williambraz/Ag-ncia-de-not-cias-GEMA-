@@ -37,6 +37,13 @@ class User extends AppModel {
                 'message' => 'Entre com um papel válido',
                 'allowEmpty' => false
             )
+        ),
+        'section' => array(
+            'valid' => array(
+                'rule' => array('inList', array('games', 'musica','series','quadrinhos')),
+                'message' => 'Entre com uma seção válida',
+                'allowEmpty' => false
+            )
         )
     );
 

@@ -6,7 +6,13 @@ class PostsController extends AppController {
     public $uses = array('Post', 'Event');
 
     function index() {
-        $this->set('posts', $this->Post->find('all'));
+        if ($this->Session->read('Auth.User.role') == 'gerente'){
+            $this->set('posts', $this->Post->find('all', array(
+                'conditions' => array('Post.section' => $this->Session->read('Auth.User.section'))
+            )));
+        }
+        else
+            $this->set('posts', $this->Post->find('all'));
     }
 
     function home() {
@@ -204,9 +210,6 @@ class PostsController extends AppController {
         else if ($this->request->action === 'index') {
             return true;
         }
-        else if ($this->request->action === 'view') {
-            return true;
-        }
         else if ($this->request->action === 'comment') {
             return true;
         }
@@ -217,13 +220,13 @@ class PostsController extends AppController {
                 return true;
             }
 
-            if (in_array($this->request->action, ['edit', 'delete'])) {
+            if (in_array($this->request->action, ['edit', 'view', 'delete'])) {
                 $postId = (int)$this->request->params['pass'][0];
                 if ($this->Post->isAuthor($postId, $user['id'])) {
                     return true;
                 }
                 else{
-                    $this->Session->setFlash('Apenas o criador do artigo pode alterá-lo.');
+                    $this->Session->setFlash('Apenas o jornalista do artigo pode acessá-lo.');
                     return false;
                 }
             }
@@ -239,13 +242,13 @@ class PostsController extends AppController {
                 return true;
             }
 
-            if (in_array($this->request->action, ['edit', 'delete'])) {
+            if (in_array($this->request->action, ['edit', 'view'])) {
                 $postId = (int)$this->request->params['pass'][0];
                 if ($this->Post->isReviser($postId, $user['id'])) {
                     return true;
                 }
                 else{
-                    $this->Session->setFlash('Apenas o revisor do artigo pode alterá-lo.');
+                    $this->Session->setFlash('Apenas o revisor do artigo pode acessá-lo.');
                     return false;
                 }
             }
@@ -265,13 +268,13 @@ class PostsController extends AppController {
                 return true;
             }
 
-            if (in_array($this->request->action, ['edit', 'delete'])) {
+            if (in_array($this->request->action, ['edit','view'])) {
                 $postId = (int)$this->request->params['pass'][0];
                 if ($this->Post->isPublisher($postId, $user['id'])) {
                     return true;
                 }
                 else{
-                    $this->Session->setFlash('Apenas o publicador do artigo pode alterá-lo.');
+                    $this->Session->setFlash('Apenas o publicador do artigo pode acessá-lo.');
                     return false;
                 }
             }
@@ -289,6 +292,17 @@ class PostsController extends AppController {
 
             if ($this->request->action === 'archive') {
                 return true;
+            }
+
+            if (in_array($this->request->action, ['view','delete'])) {
+                $postId = (int)$this->request->params['pass'][0];
+                if ($this->Post->isManager($postId, $user['section'])) {
+                    return true;
+                }
+                else{
+                    $this->Session->setFlash('Apenas o gerente desta seção pode fazer alterações.');
+                    return false;
+                }
             }
 
         }

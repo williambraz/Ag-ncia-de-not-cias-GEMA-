@@ -21,11 +21,14 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 <html>
 <head>
 	<?php echo $this->Html->charset(); ?>
+	
 	<title>
 		<?php echo $cakeDescription ?>:
 		<?php echo $this->fetch('title'); ?>
 	</title>
+
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+
 	<?php
 		echo $this->Html->meta('icon');
 
@@ -34,7 +37,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->css('jquery.dataTables.min.css');
 		echo $this->Html->css('dataTables.responsive.css');
 		echo $this->Html->css('AdminLTE.min.css');
-		echo $this->Html->css('redactor.css');
+  		echo $this->Html->css('froala_editor.min.css');
+  		echo $this->Html->css('froala_style.min.css');
+  		echo $this->Html->css('select2.min.css');
 		echo $this->Html->css('estilos.css');
 
 		echo $this->Html->script('jquery-2.1.4.min');
@@ -42,7 +47,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->script('jquery.dataTables.min.js');
 		echo $this->Html->script('dataTables.bootstrap.js');
 		echo $this->Html->script('dataTables.responsive.js');
-		echo $this->Html->script('redactor.min.js');
+		echo $this->Html->script('froala_editor.min.js');
+		echo $this->Html->script('select2.min.js');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
@@ -73,6 +79,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		<footer class='row' id="footer">
 			<span><strong> Projeto GEMA - PUC 2015</strong></span>
 		</footer>
+
 	<?php echo $this->element('sql_dump'); ?>
 </body>
 </html>

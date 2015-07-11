@@ -16,7 +16,7 @@
         echo $this->Form->input('password', array('label'=>'Senha:','required' => 'false'));
         echo $this->Form->input('name', array('label'=>'Nome Completo:'));
 
-        if ($this->session->read('Auth.User.role') == 'admin'){
+        if ($this->session->read('Auth.user.role') == 'admin'){
           echo $this->Form->input('role', array('label'=>'Papel:',
               'options' => array('jornalista' => 'Jornalista', 'revisor' => 'Revisor', 'publicador' => 'Publicador', 'gerente' => 'Gerente')
           ));

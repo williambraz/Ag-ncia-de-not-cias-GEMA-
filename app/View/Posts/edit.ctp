@@ -36,17 +36,16 @@
     </div>
 
   </div><!-- /.box-body -->
-  <div class="box-footer">
-    
+  <div class="box-footer center">
+    <?php echo $this->Html->link('Voltar', array('controller' => 'posts', 'action' => 'index'),array('class'=>'btn btn-primary'));?>
   </div><!-- box-footer -->
 </div><!-- /.box -->
 
 <script type="text/javascript">
   $(document).ready( function() {
           
-      $('#PostContent').redactor({ 
-          focus: true
-      });            
+    $('select').select2({ width: '100%' }); 
+    $('#PostContent').editable({inlineMode: false});        
        
   });
 </script>
