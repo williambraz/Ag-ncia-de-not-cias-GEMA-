@@ -90,7 +90,7 @@
 
                     <div class="post well">
                         <strong><?php echo $comment['User']['username'];?></strong></br>
-                        <small><?php $data = new DateTime($comment['created']); echo $data->format('d/m/Y H:m:s');?></small>
+                        <small><?php $this->Time->format('d/m/Y', $comment['created'],null,null);?></small>
                         <p><?php echo $comment['content']; ?></p>
                     </div>
 

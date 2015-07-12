@@ -9,11 +9,12 @@ form .submit input[type=submit]{
 	background: #333;
 	color: #fad100;
 	font-weight: bold;
+	border-color: #333;
 }
 
 form .submit input[type=submit]:hover {
-	text-decoration: underline;
-	background: #333;
+	background: #666;
+	border-color: #666;
 	color: #fad100;
 	font-weight: bold;
 }
@@ -90,15 +91,19 @@ a:hover{
 	margin-bottom: 20px;
 }
 
+
 .btn-primary,  .btn-primary:hover, .btn-primary:active, .btn-primary:focus{
-	background: #333;
-	color: #fad100;
-	border-color: #333;
 	font-weight: bold;
 }
-
-.btn-primary:hover, .btn-primary:active{
-	text-decoration: underline;
+.btn-primary{
+	border-color: #333;
+	background: #333;
+	color: #fad100;
+}
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus{
+	background: #666;
+	border-color: #666;
+	color: #fad100;
 }
 
 .box.box-primary {
@@ -113,14 +118,17 @@ a:hover{
 }
 
 .pagination>.active>a:hover, .pagination>.active>span:hover {
-	text-decoration: underline;
+	background: #666;
+    border: #666;
+    padding: 7px 13px;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover, .dataTables_wrapper .dataTables_paginate .paginate_button:active {
     color: white !important;
-    background: none;
+    background: #666;
     border: none;
     box-shadow: none;
+    padding: 0px;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.previous a,
@@ -132,7 +140,9 @@ a:hover{
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.previous a:hover,
 .dataTables_wrapper .dataTables_paginate .paginate_button.next a:hover{
-	text-decoration: underline;
+	background: #666;
+    border: #666;
+    padding: 7px 13px;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
@@ -143,14 +153,37 @@ a:hover{
     border: none;
     background: none;
     box-shadow: none;
+    padding: 1px;
 }
+
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+	padding: 0px;
+}
+
+.dataTables_wrapper .dataTables_filter input{
+	width: 300px;
+}
+
+.pagination>li {
+	margin: 0px;
+}
+
+@media screen and (max-width: 680px){
+
+	.filtros strong{
+		display: block;
+	}
+
+} 
 
 #header a {
-  color: #fad100;
+	color: #fad100;
 }
 
-#header a:hover {
-  text-decoration: underline;
+#header a:hover:before {
+	font-family: FontAwesome;
+	content: "\f101";
+	margin-right: 5px;
 }
 
 #footer{
@@ -161,4 +194,70 @@ a:hover{
 
 #footer span{
 	color: #fad100;
+}
+
+#SearchHomeForm, #SearchSectionForm{
+	margin: 5px 0px 0px 0px;
+	width: 100%;
+	min-width: 300px;
+}
+
+#SearchHomeForm .input.text, #SearchSectionForm .input.text{
+	width: 100%;
+	margin-bottom: 0px;
+	display: inline-block;
+}
+
+#SearchHomeForm input, #SearchSectionForm input{
+	background-color: #374850;
+	color:#FFFFFF;
+	border-top-left-radius: 2px !important;
+	border-top-right-radius: 2px !important;
+	border-bottom-right-radius: 2px !important;
+	border-bottom-left-radius: 2px !important;
+	border: 1px solid transparent;
+	height: 35px;
+}
+
+#SearchHomeForm input:focus, #SearchSectionForm input:focus{
+	background-color: #fff;
+	color: #666;
+	outline: 0;
+}
+ 
+#SearchHomeForm button, #SearchSectionForm button{
+	position: absolute;
+	top: 6px;
+	right: 5px;
+	height: 35px;
+	background-color:transparent;
+	border: 1px solid transparent;
+	border-top-left-radius: 2px !important;
+	border-top-right-radius: 2px !important;
+	border-bottom-right-radius: 2px !important;
+	border-bottom-left-radius: 2px !important;
+}
+
+@media screen and (max-width: 965px){
+	#SearchHomeForm, #SearchSectionForm{
+		min-width: 200px;
+	}
+}
+
+@media screen and (max-width: 768px){
+	#SearchHomeForm button, #SearchSectionForm button{
+		top: 1px;
+		right: 13px;
+	}	
+
+	#SearchHomeForm, #SearchSectionForm{
+		margin-top: 15px;
+	}
+}
+
+
+#SearchHomeForm button:hover, #SearchSectionForm button:hover{
+	background-color:#999;
+	content: "";
+	margin-right: 0px;
 }

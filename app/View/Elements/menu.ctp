@@ -30,7 +30,7 @@
 		<ul class='nav navbar-nav collapse navbar-collapse navbar-right'>
 			<li>
 				<a href='#' data-target='#' data-toggle='dropdown'>
-					 <i class="fa fa-user"></i><?php echo ' ' . $this->session->read('Auth.User.username');?><span class="caret"></span>
+					 <i class="fa fa-gears"></i><?php echo ' ' . $this->session->read('Auth.User.username');?><span class="caret"></span>
 		        </a>
 				<ul class='dropdown-menu'>
 					<li>

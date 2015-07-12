@@ -27,3 +27,11 @@
     <?php echo $this->Html->link('Voltar', array('controller' => 'posts', 'action' => 'index'),array('class'=>'btn btn-primary'));?>
   </div><!-- box-footer -->
 </div><!-- /.box -->
+
+<script type="text/javascript">
+  $(document).ready( function() {
+          
+    $('select').select2({ width: '100%' });              
+       
+  });
+</script>

@@ -11,9 +11,10 @@
     <h3 class="box-title">Matérias</h3>
     <div class="filtros center">
         <?php if ($this->session->read('Auth.User.role') == "gerente") : 
-            echo "<p>Seção de " . $this->session->read('Auth.User.section') . " </p>";
+                echo "<p>Seção de " . $this->session->read('Auth.User.section') . " </p>";
             else : 
         ?>
+                <strong>Filtros: </strong>
                 <button id="btn-games" class="btn btn-primary">Games</button>
                 <button id="btn-filmes" class="btn btn-primary">Séries</button>
                 <button id="btn-hq" class="btn btn-primary">Quadrinhos</button>
@@ -81,7 +82,7 @@
                     </td>
                     <td><?php echo $post['Post']['section']; ?></td>
                     <td><?php echo $post['Post']['state']; ?></td>
-                    <td><?php $data = new DateTime($post['Post']['created']); echo $data->format('d/m/Y - H:m:s'); ?></td>
+                    <td><?php echo $this->Time->format('d/m/Y - h:i A', $post['Post']['created'],null,null); ?></td>
                     <td><?php echo $this->Html->link('Editar', array('controller' => 'posts', 'action' => 'edit', $post['Post']['id']));?>
                     </td>
                     <td><?php echo $this->Form->postLink('Deletar', array('action' => 'delete', $post['Post']['id']));?></td>
@@ -98,6 +99,9 @@
 
 <script>
 $(document).ready(function(){
+
+    $.fn.dataTable.moment( 'd/m/YYYY' );
+    
     var tabela = $('#table_index').dataTable({
         responsive: true,
         "order": [[ 0, "desc" ]],

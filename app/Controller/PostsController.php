@@ -16,20 +16,100 @@ class PostsController extends AppController {
     }
 
     function home() {
-        $this->set('posts', $this->Post->find('all',array(
+        
+        if ($this->request->is('post')){
+
+            $search = $this->request->data['Search']['content'];
+
+            $options = array(
+                'order' => array('Post.created' => 'desc'),
+                'conditions' => array(
+                    //'Post.state' => 'publicada',
+                    'OR' => array(
+                        "Post.title LIKE" => "%".$search."%",
+                        "Post.content LIKE" => "%".$search."%"
+                    )
+                ),
+                'limit' => 5,
+            );
+
+            $this->paginate = $options;
+            $this->set('posts', $this->paginate('Post'));
+
+        }else{
+
+            //seta conteúdo padrão
+            $options = array(
+                'order' => array('Post.created' => 'desc'),
+                //'conditions' => array('Post.state' => 'publicada'),
+                'limit' => 5,
+            );
+
+            $this->paginate = $options;
+            $this->set('posts', $this->paginate('Post'));
+
+        }
+
+        //seta bloco
+        $optionsBlock = array(
             'order' => array('Post.created' => 'desc'),
-            'conditions' => array('Post.state' => 'publicada')
-        )));
+            //'conditions' => array('Post.state' => 'publicada'),
+            'limit' => 5,
+        );
+        
+        $this->set('postsBlock', $this->Post->find('all',$optionsBlock));
     }
 
     function section($section = null) {
-        $this->set('posts', $this->Post->find('all',array(
+        
+        if ($this->request->is('post')){
+
+            $search = $this->request->data['Search']['content'];
+
+            $options = array(
+                'order' => array('Post.created' => 'desc'),
+                'conditions' => array(
+                    'Post.state' => 'publicada',
+                    'Post.section' => $section,
+                    'OR' => array(
+                        "Post.title LIKE" => "%".$search."%",
+                        "Post.content LIKE" => "%".$search."%"
+                    )
+                ),
+                'limit' => 5,
+            );
+
+            $this->paginate = $options;
+            $this->set('posts', $this->paginate('Post'));
+
+        }else{
+
+            //seta conteúdo padrão
+            $options = array(
+                'order' => array('Post.created' => 'desc'),
+                'conditions' => array(
+                    'Post.state' => 'publicada',
+                    'Post.section' => $section
+                ),
+                'limit' => 5,
+            );
+
+            $this->paginate = $options;
+            $this->set('posts', $this->paginate('Post'));
+
+        }
+
+        //seta bloco
+        $optionsBlock = array(
             'order' => array('Post.created' => 'desc'),
             'conditions' => array(
-                'Post.section' => $section,
-                'Post.state' => 'publicada'
-            )
-        )));
+                'Post.state' => 'publicada',
+                'Post.section' => $section
+            ),
+            'limit' => 5,
+        );
+        
+        $this->set('postsBlock', $this->Post->find('all',$optionsBlock));
     }
 
     function view($id){
@@ -94,6 +174,22 @@ class PostsController extends AppController {
                 $this->redirect(array('action'=>'index'));
     		}
     	}
+    }
+
+    function search($content = null) {
+        
+
+        //if ($this->request->is('post')){
+           // var_dump($this->request->data);
+            echo $content;
+            /*$this->request->data['Post']['journalist_id'] = $this->Auth->user('id');
+            $this->request->data['Post']['state'] = $state;
+            if ($this->Post->save($this->request->data)){
+    
+                $this->saveEvent($this->Post->getLastInsertID(), $this->Auth->user('id'), $state);
+                $this->Session->setFlash("A sua matéria foi salva");
+                $this->redirect(array('action'=>'index'));
+            }*/
     }
 
     public function saveEvent($post_id, $user_id, $state){

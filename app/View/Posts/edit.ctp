@@ -27,7 +27,7 @@
         <?php foreach ($post['Comment'] as $comment): ?>
 
             <div class="post well">
-                <p><?php echo $comment['User']['username'] . ' - ' . $comment['created'];?></h1>
+                <p><?php echo $comment['User']['username'] . ' - ' . $this->Time->format('d/m/Y', $comment['created'],null,null);?></h1>
                 <p><?php echo $comment['content']; ?></p>
             </div>
 

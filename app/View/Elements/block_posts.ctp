@@ -1,9 +1,9 @@
 <div class='block_posts'>
-    <?php if (!empty($posts)) : ?>
+    <?php if (!empty($postsBlock)) : ?>
         <strong> Últimos Posts </strong>
     <?php endif; ?>
     <div>
-        <?php foreach ($posts as $post): ?>
+        <?php foreach ($postsBlock as $post): ?>
             <div class='basic_post'>
                 <div class='basic_section'>
                     <span><strong>
