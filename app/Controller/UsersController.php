@@ -2,6 +2,8 @@
 // app/Controller/UsersController.php
 class UsersController extends AppController {
 
+    public $helpers = array('Html','Form','Session');
+
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('logout');

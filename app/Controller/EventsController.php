@@ -1,6 +1,8 @@
 <?php
 class EventsController extends AppController {
 
+    public $helpers = array('Html','Form','Session');
+
     function index() {
         $this->set('events', $this->Event->find('all'));
     }

@@ -165,6 +165,8 @@ class PostsController extends AppController {
     function add(){
         $state = "proposta";
     	if ($this->request->is('post')){
+            //var_dump( $this->request->data);
+            //die();
             $this->request->data['Post']['journalist_id'] = $this->Auth->user('id');
             $this->request->data['Post']['state'] = $state;
     		if ($this->Post->save($this->request->data)){
@@ -174,22 +176,6 @@ class PostsController extends AppController {
                 $this->redirect(array('action'=>'index'));
     		}
     	}
-    }
-
-    function search($content = null) {
-        
-
-        //if ($this->request->is('post')){
-           // var_dump($this->request->data);
-            echo $content;
-            /*$this->request->data['Post']['journalist_id'] = $this->Auth->user('id');
-            $this->request->data['Post']['state'] = $state;
-            if ($this->Post->save($this->request->data)){
-    
-                $this->saveEvent($this->Post->getLastInsertID(), $this->Auth->user('id'), $state);
-                $this->Session->setFlash("A sua matéria foi salva");
-                $this->redirect(array('action'=>'index'));
-            }*/
     }
 
     public function saveEvent($post_id, $user_id, $state){

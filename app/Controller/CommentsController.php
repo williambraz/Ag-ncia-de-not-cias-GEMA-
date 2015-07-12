@@ -1,6 +1,8 @@
 <?php
 class CommentsController extends AppController {
 
+	public $helpers = array('Html','Form','Session');
+
     function index() {
         $this->set('comments', $this->Comment->find('all'));
     }

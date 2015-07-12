@@ -23,7 +23,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	<?php echo $this->Html->charset(); ?>
 	
 	<title>
-		<?php echo $cakeDescription ?>:
+		GEMA - 
 		<?php echo $this->fetch('title'); ?>
 	</title>
 

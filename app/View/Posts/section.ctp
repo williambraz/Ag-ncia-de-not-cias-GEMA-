@@ -24,7 +24,7 @@
                         <i class="fa fa-film"></i>
                     <?php echo "Séries e TV"; ?>
                     <?php elseif ($post['Post']['section'] == 'quadrinhos') : ?>
-                        <i class="fa fa-file"></i>
+                        <i class="fa fa-comment"></i>
                     <?php echo "Quadrinhos"; ?>
                     <?php endif ?>
                     </strong></span>

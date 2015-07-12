@@ -35,7 +35,10 @@
   $(document).ready( function() {
           
     $('select').select2({ width: '100%' }); 
-    $('#PostContent').editable({inlineMode: false});              
+    $('#PostContent').editable({inlineMode: false, height:200, imageUploadURL: 'http://www.williambraz.com.br/upload_image.php',  imageErrorCallback: function (data) {
+    		console.log(data);
+    	}
+ 	});             
        
   });
 </script>
