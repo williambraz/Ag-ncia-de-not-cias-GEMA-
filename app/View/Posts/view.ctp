@@ -118,8 +118,12 @@ $(document).ready(function() {
 				//$("h2").html(data);
             }
         });
-	});*/
-    $('#CommentContent').editable({inlineMode: false});   
+	});*/ 
+    $('#CommentContent').editable({inlineMode: false, height:200, placeholder: 'Digite aqui o seu texto', imageUploadURL: 'http://www.williambraz.com.br/upload_image.php',  imageErrorCallback: function (data) {
+            console.log(data);
+        }
+    });
+
 });
 </script>
 	

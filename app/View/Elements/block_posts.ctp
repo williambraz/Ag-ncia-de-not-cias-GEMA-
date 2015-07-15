@@ -16,7 +16,7 @@
                     <?php elseif ($post['Post']['section'] == 'quadrinhos') : ?>
                         <i class="fa fa-comment"></i>
                     <?php endif ?>
-                    <?php echo $post['Post']['title']; ?></br>
+                    <?php echo $this->Html->link($post['Post']['title'], array('controller' => 'posts', 'action' => 'home_view', $post['Post']['id']),array('class'=>'block-link')); ?></br>
                     <small><?php echo $post['Journalist']['name']; ?></small></br>
                     <small><?php $data = new DateTime($post['Post']['created']); echo $data->format('d/m/Y'); ?></small>
                     </strong></span>

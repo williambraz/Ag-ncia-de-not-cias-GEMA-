@@ -1,7 +1,8 @@
 <div class="navbar navbar-default navbar-static-top">
 	<header id="header">
 		<div class='navbar-header'>
-			<?php echo $this->Html->link("GEMA", array('controller' => 'posts', 'action' => 'home'),array('class'=>'navbar-brand'));?>
+			<!--<?php echo $this->Html->link("GEMA", array('controller' => 'posts', 'action' => 'home'),array('class'=>'navbar-brand'));?>-->
+			<?php echo $this->Html->link($this->Html->image('logo.png', array('alt' => 'Unpipeds', 'class'=>'navbar-brand')), array('controller' => 'posts', 'action' => 'home'),array('escape'=>false));?>
 			<button class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
 				<span class='sr-only'>Toggle Navigation</span>
 				<span class='icon-bar'></span>
@@ -18,7 +19,7 @@
 		<ul class='nav navbar-nav collapse navbar-collapse navbar-right'>
 			<li>
 			    <?php
-				    echo $this->Form->create('Search');
+				    echo $this->Form->create('Search',array('class' => 'search-form','url' => '/posts/home'));
 					echo $this->Form->input('content', array('label'=>'', 'placeholder'=>'Busca...'));
 					echo $this->Form->button('<i class="fa fa-search"></i>', array(
 					    'type' => 'submit',

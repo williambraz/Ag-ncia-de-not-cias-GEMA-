@@ -42,7 +42,7 @@ class AppController extends Controller {
         )
     );
 
-    /*public function appError($error) {
+    public function appError($error) {
         //print_r($this->Session->read());
         if (!empty($this->Session->read('Auth.User'))){
             $this->Session->setFlash('Página não encontrada.');
@@ -51,14 +51,13 @@ class AppController extends Controller {
            $this->Session->setFlash('Página não encontrada.');
            $this->redirect(array('controller' => 'posts', 'action' => 'home')); 
         }
-    }*/
+    }
 
 	//permite que qualquer usuário veja qualquer view.
     function beforeFilter() {
     	//$this->Auth->unauthorizedRedirect=FALSE ;
 		$this->Auth->authError = 'É necessário estar logado para ver esta página';
-        //$this->Auth->allow('index','view','home');
-        $this->Auth->allow('home','section');
+        $this->Auth->allow('home','home_view','section');
     }
 
     //configura acessos

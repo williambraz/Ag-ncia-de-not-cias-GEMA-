@@ -18,7 +18,7 @@
           <?php foreach ($events as $event): ?>
               <div class="post well">
                 <strong><?php echo $event['User']['username'];?></strong></br>
-                <small><?php $this->Time->format('d/m/Y', $event['Event']['created'],null,null);?></small>
+                <small><?php echo $this->Time->format('d/m/Y', $event['Event']['created'],null,null);?></small>
                 <p><?php echo 'Estado atualizado : ' . $event['Event']['state']; ?></p>
               </div>
           <?php endforeach; ?>

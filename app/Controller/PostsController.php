@@ -132,6 +132,22 @@ class PostsController extends AppController {
         )));
     }
 
+    function home_view($id){
+        
+        $this->set('post', $this->Post->find( 'first', array (
+            'conditions' => array('Post.id' => $id)
+        )));
+
+        //seta bloco
+        $optionsBlock = array(
+            'order' => array('Post.created' => 'desc'),
+            //'conditions' => array('Post.state' => 'publicada'),
+            'limit' => 5,
+        );
+        
+        $this->set('postsBlock', $this->Post->find('all',$optionsBlock));
+    }
+
     function comment(){
         $this->autoRender = false; 
         $this->layout = "ajax";
@@ -176,16 +192,6 @@ class PostsController extends AppController {
                 $this->redirect(array('action'=>'index'));
     		}
     	}
-    }
-
-    public function saveEvent($post_id, $user_id, $state){
-        $this->Event->create();
-        $event = array('Event' => array(
-          'post_id' => $post_id, 
-          'user_id' => $user_id,
-          'state' => $state
-        )); 
-        $this->Event->save($event);
     }
 
     function delete($id = null){
@@ -253,6 +259,7 @@ class PostsController extends AppController {
     }
 
     function select_publisher(){
+        $state = 'em publicação';
 
         if (!$this->request->is("get")){
             throw new MethodNotAllowedException();
@@ -263,11 +270,14 @@ class PostsController extends AppController {
 
         $this->Post->id = $id;
         $this->Post->saveField('publisher_id',$publisher_id);
+        $this->Post->saveField('state',$state);
+        $this->saveEvent($id, $this->Auth->user('id'), $state);
         $this->Session->setFlash('Você agora é responsável pela publicação da matéria com id = '.$id);
         $this->redirect(array("action"=>"index"));
     }
 
     function select_reviser(){
+        $state = 'em revisão';
 
         if (!$this->request->is("get")){
             throw new MethodNotAllowedException();
@@ -278,6 +288,8 @@ class PostsController extends AppController {
 
         $this->Post->id = $id;
         $this->Post->saveField('reviser_id',$reviser_id);
+        $this->Post->saveField('state',$state);
+        $this->saveEvent($id, $this->Auth->user('id'), $state);
         $this->Session->setFlash('Você agora é responsável pela revisão da matéria com id = '.$id);
         $this->redirect(array("action"=>"index"));
     }
@@ -390,5 +402,15 @@ class PostsController extends AppController {
         }
 
         return parent::isAuthorized($user);
+    }
+
+    public function saveEvent($post_id, $user_id, $state){
+        $this->Event->create();
+        $event = array('Event' => array(
+          'post_id' => $post_id, 
+          'user_id' => $user_id,
+          'state' => $state
+        )); 
+        $this->Event->save($event);
     }
 }

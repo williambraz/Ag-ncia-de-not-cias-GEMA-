@@ -82,7 +82,8 @@
                     </td>
                     <td><?php echo $post['Post']['section']; ?></td>
                     <td><?php echo $post['Post']['state']; ?></td>
-                    <td><?php echo $this->Time->format('d/m/Y - h:i A', $post['Post']['created'],null,null); ?></td>
+                    <td><?php echo date_format(new DateTime($post['Post']['created']),'d/m/Y - H:m:s') ?></td>
+
                     <td><?php echo $this->Html->link('Editar', array('controller' => 'posts', 'action' => 'edit', $post['Post']['id']));?>
                     </td>
                     <td><?php echo $this->Form->postLink('Deletar', array('action' => 'delete', $post['Post']['id']));?></td>
@@ -100,7 +101,7 @@
 <script>
 $(document).ready(function(){
 
-    $.fn.dataTable.moment( 'd/m/YYYY' );
+    $.fn.dataTable.moment( 'D/M/YYYY - H:m:s' );
     
     var tabela = $('#table_index').dataTable({
         responsive: true,

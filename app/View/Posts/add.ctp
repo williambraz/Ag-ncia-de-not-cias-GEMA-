@@ -32,13 +32,14 @@
 </div><!-- /.box -->
 
 <script type="text/javascript">
-  $(document).ready( function() {
+$(document).ready( function() {
           
     $('select').select2({ width: '100%' }); 
-    $('#PostContent').editable({inlineMode: false, height:200, imageUploadURL: 'http://www.williambraz.com.br/upload_image.php',  imageErrorCallback: function (data) {
+    $('#PostContent').editable({inlineMode: false, height:200, placeholder: 'Digite aqui o seu texto', imageUploadURL: 'http://www.williambraz.com.br/upload_image.php',  imageErrorCallback: function (data) {
     		console.log(data);
     	}
- 	});             
-       
-  });
+ 	});     
+	
+});        
+     
 </script>

@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+body{
+	background-color: #ecf0f5;
+}
+
 form .froala-box div{
 	clear: none;
 	margin-bottom: 0em;
@@ -21,11 +25,12 @@ form .submit input[type=submit]:hover {
 
 h1{
 	font-size: 26px;
+	background-color: #ecf0f5;
 }
 
-a:hover{
-	text-decoration: underline;
-}
+/*.box{
+	background-color: #ecf0f5;
+}*/
 
 .titulo{
 	margin: 20px auto 30px auto;
@@ -51,6 +56,10 @@ a:hover{
 
 .navbar-default, .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
   background-color: #333;
+}
+
+.navbar-brand{
+	padding: 0px 15px;
 }
 
 .dropdown-menu {
@@ -166,24 +175,26 @@ a:hover{
 
 .pagination>li {
 	margin: 0px;
-}
-
-@media screen and (max-width: 680px){
-
-	.filtros strong{
-		display: block;
-	}
-
 } 
 
-#header a {
+#header a, .block-link {
 	color: #fad100;
 }
 
-#header a:hover:before {
+.block-link:hover {
+	color: #fad100;
+	text-decoration: underline;
+}
+
+#header a:hover:before{
 	font-family: FontAwesome;
 	content: "\f101";
 	margin-right: 5px;
+}
+
+#header .navbar-header a:hover:before{
+	content: "";
+	margin-right: 0px;
 }
 
 #footer{
@@ -196,19 +207,27 @@ a:hover{
 	color: #fad100;
 }
 
-#SearchHomeForm, #SearchSectionForm{
+img.fr-dib {
+	max-width: 100%;
+}
+
+#content{
+	background-color: #ecf0f5;
+}
+
+.search-form{
 	margin: 5px 0px 0px 0px;
 	width: 100%;
 	min-width: 300px;
 }
 
-#SearchHomeForm .input.text, #SearchSectionForm .input.text{
+.search-form .input.text{
 	width: 100%;
 	margin-bottom: 0px;
 	display: inline-block;
 }
 
-#SearchHomeForm input, #SearchSectionForm input{
+.search-form input{
 	background-color: #374850;
 	color:#FFFFFF;
 	border-top-left-radius: 2px !important;
@@ -219,13 +238,13 @@ a:hover{
 	height: 35px;
 }
 
-#SearchHomeForm input:focus, #SearchSectionForm input:focus{
+.search-form input:focus{
 	background-color: #fff;
 	color: #666;
 	outline: 0;
 }
  
-#SearchHomeForm button, #SearchSectionForm button{
+.search-form button{
 	position: absolute;
 	top: 6px;
 	right: 5px;
@@ -238,26 +257,37 @@ a:hover{
 	border-bottom-left-radius: 2px !important;
 }
 
+.search-form button:hover{
+	background-color:#999;
+	content: "";
+	margin-right: 0px;
+}
+
 @media screen and (max-width: 965px){
-	#SearchHomeForm, #SearchSectionForm{
+	.search-form{
 		min-width: 200px;
 	}
 }
 
 @media screen and (max-width: 768px){
-	#SearchHomeForm button, #SearchSectionForm button{
+	.search-form button {
 		top: 1px;
 		right: 13px;
 	}	
 
-	#SearchHomeForm, #SearchSectionForm{
+	.search-form{
 		margin-top: 15px;
+	}
+
+	h1{
+		font-size: 22px;
 	}
 }
 
+@media screen and (max-width: 680px){
 
-#SearchHomeForm button:hover, #SearchSectionForm button:hover{
-	background-color:#999;
-	content: "";
-	margin-right: 0px;
+	.filtros strong{
+		display: block;
+	}
+
 }

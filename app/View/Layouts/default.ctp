@@ -34,6 +34,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 		echo $this->Html->css('cake.generic.css');
 		echo $this->Html->css('bootstrap.min.css');
+		echo $this->Html->css('source_sans_pro.css');
 		echo $this->Html->css('jquery.dataTables.min.css');
 		echo $this->Html->css('dataTables.responsive.css');
 		echo $this->Html->css('AdminLTE.min.css');
@@ -58,7 +59,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	?>
 </head>
 <body>	
-		<?php if ($this->action == 'home' || $this->action == 'section') : ?>
+		<?php if ($this->action == 'home' || $this->action == 'home_view' || $this->action == 'section') : ?>
 			<?php echo $this->element('menu_home') ?>
 			<div class="container">
 		<?php elseif ($this->action == 'login') : ?>
