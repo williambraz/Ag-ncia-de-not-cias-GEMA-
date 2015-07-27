@@ -12,28 +12,32 @@
 
     	<?php
     	    echo $this->Form->create('Post', array('action' => 'edit'));
-    	    echo $this->Form->input('title');
-    	    echo $this->Form->input('content', array('rows' => '3'));
+    	    echo $this->Form->input('title', array('label' => 'Título'));
+    	    echo $this->Form->input('content', array('label' => 'Conteúdo','rows' => '3'));
     	    echo $this->Form->input('id', array('type' => 'hidden'));
     	    echo $this->Form->end('Salvar');
     	?>
 
     </div>
 
-    <div>
+  	<?php if (!empty($post['Comment'])): ?>
+      <div class='basic_post'>
+          <div class='basic_section comments'>
+              <span><strong>Comentários</strong></span>
+          </div>
+          <div class='basic_content'>
+              <?php foreach ($post['Comment'] as $comment): ?>
 
-    	<?php if (!empty($post['Comment'])) echo '<h2> Comentários </h2>'; ?>
+                  <div class="post well">
+                      <strong><?php echo $comment['User']['username'];?></strong></br>
+                      <small><?php echo $this->Time->format('d/m/Y - H:m:s', $comment['created'],null,null);?></small>
+                      <p><?php echo $comment['content']; ?></p>
+                  </div>
 
-        <?php foreach ($post['Comment'] as $comment): ?>
-
-            <div class="post well">
-                <p><?php echo $comment['User']['username'] . ' - ' . $this->Time->format('d/m/Y', $comment['created'],null,null);?></h1>
-                <p><?php echo $comment['content']; ?></p>
-            </div>
-
-        <?php endforeach; ?>
-
-    </div>
+              <?php endforeach; ?>
+          </div>
+      </div>
+    <?php endif; ?>
 
   </div><!-- /.box-body -->
   <div class="box-footer center">

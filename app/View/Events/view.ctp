@@ -9,7 +9,7 @@
   <div class="box-body">
 
     <div class='basic_post'>
-      <div class='basic_section'>
+      <div class='basic_section events'>
           <span><strong>
           <?php echo 'Matéria: ' . $events[0]['Post']['title']; ?>
           </strong></span>
@@ -18,7 +18,7 @@
           <?php foreach ($events as $event): ?>
               <div class="post well">
                 <strong><?php echo $event['User']['username'];?></strong></br>
-                <small><?php echo $this->Time->format('d/m/Y', $event['Event']['created'],null,null);?></small>
+                <small><?php echo $this->Time->format('d/m/Y - H:m:s', $event['Event']['created'],null,null);?></small>
                 <p><?php echo 'Estado atualizado : ' . $event['Event']['state']; ?></p>
               </div>
           <?php endforeach; ?>
@@ -29,7 +29,7 @@
     </div>
 
   </div><!-- /.box-body -->
-  <div class="box-footer">
-    
+  <div class="box-footer center">
+    <?php echo $this->Html->link('Voltar', array('controller' => 'posts', 'action' => 'index'),array('class'=>'btn btn-primary'));?>
   </div><!-- box-footer -->
 </div><!-- /.box -->

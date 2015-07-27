@@ -11,7 +11,7 @@
     <h3 class="box-title">Matérias</h3>
     <div class="filtros center">
         <?php if ($this->session->read('Auth.User.role') == "gerente") : 
-                echo "<p>Seção de " . $this->session->read('Auth.User.section') . " </p>";
+                echo "<h1>Seção de " . $this->session->read('Auth.User.section') . " </h1>";
             else : 
         ?>
                 <strong>Filtros: </strong>
@@ -36,9 +36,12 @@
                     <th>Seção</th>
                     <th>Estado</th>
                     <th>Data de Criação</th>
-                    <th class="all">Editar</th>
-                    <th class="all">Deletar</th>
+                    <?php if ($this->session->read('Auth.User.role') != "gerente"):?>
+                        <th class="all">Editar</th>
+                     <?php endif; ?>
+                    <!--<th class="all">Deletar</th>-->
                     <th>Eventos</th>
+                   
                 </tr>
             </thead>
 
@@ -52,8 +55,12 @@
                     <th>Seção</th>
                     <th>Estado</th>
                     <th>Data de Criação</th>
-                    <th>Editar</th>
-                    <th>Deletar</th>
+                    <?php if ($this->session->read('Auth.User.role') != "gerente"):?>
+                        <th>Editar</th>
+                    <?php endif; ?>
+                    <!--<th>Deletar</th>-->
+                    <th>Eventos</th>
+                    
                 </tr>
             </tfoot>
 
@@ -83,10 +90,11 @@
                     <td><?php echo $post['Post']['section']; ?></td>
                     <td><?php echo $post['Post']['state']; ?></td>
                     <td><?php echo date_format(new DateTime($post['Post']['created']),'d/m/Y - H:m:s') ?></td>
-
-                    <td><?php echo $this->Html->link('Editar', array('controller' => 'posts', 'action' => 'edit', $post['Post']['id']));?>
-                    </td>
-                    <td><?php echo $this->Form->postLink('Deletar', array('action' => 'delete', $post['Post']['id']));?></td>
+                    <?php if ($this->session->read('Auth.User.role') != "gerente"):?>
+                        <td><?php echo $this->Html->link('Editar', array('controller' => 'posts', 'action' => 'edit', $post['Post']['id']));?>
+                        </td>
+                    <?php endif; ?>
+                    <!--<td><?php echo $this->Form->postLink('Deletar', array('action' => 'delete', $post['Post']['id']));?></td>-->
                     <td><?php echo $this->Form->postLink('Eventos', array('controller' => 'events', 'action' => 'view', $post['Post']['id']));?></td>
 
                 </tr>

@@ -24,7 +24,7 @@ class PostsController extends AppController {
             $options = array(
                 'order' => array('Post.created' => 'desc'),
                 'conditions' => array(
-                    //'Post.state' => 'publicada',
+                    'Post.state' => 'publicada',
                     'OR' => array(
                         "Post.title LIKE" => "%".$search."%",
                         "Post.content LIKE" => "%".$search."%"
@@ -41,7 +41,7 @@ class PostsController extends AppController {
             //seta conteúdo padrão
             $options = array(
                 'order' => array('Post.created' => 'desc'),
-                //'conditions' => array('Post.state' => 'publicada'),
+                'conditions' => array('Post.state' => 'publicada'),
                 'limit' => 5,
             );
 
@@ -53,7 +53,7 @@ class PostsController extends AppController {
         //seta bloco
         $optionsBlock = array(
             'order' => array('Post.created' => 'desc'),
-            //'conditions' => array('Post.state' => 'publicada'),
+            'conditions' => array('Post.state' => 'publicada'),
             'limit' => 5,
         );
         
@@ -141,7 +141,7 @@ class PostsController extends AppController {
         //seta bloco
         $optionsBlock = array(
             'order' => array('Post.created' => 'desc'),
-            //'conditions' => array('Post.state' => 'publicada'),
+            'conditions' => array('Post.state' => 'publicada'),
             'limit' => 5,
         );
         
@@ -272,7 +272,7 @@ class PostsController extends AppController {
         $this->Post->saveField('publisher_id',$publisher_id);
         $this->Post->saveField('state',$state);
         $this->saveEvent($id, $this->Auth->user('id'), $state);
-        $this->Session->setFlash('Você agora é responsável pela publicação da matéria com id = '.$id);
+        $this->Session->setFlash('Você agora é responsável pela publicação da seguinte matéria: '.$this->Post->field('title'));
         $this->redirect(array("action"=>"index"));
     }
 
@@ -290,8 +290,19 @@ class PostsController extends AppController {
         $this->Post->saveField('reviser_id',$reviser_id);
         $this->Post->saveField('state',$state);
         $this->saveEvent($id, $this->Auth->user('id'), $state);
-        $this->Session->setFlash('Você agora é responsável pela revisão da matéria com id = '.$id);
+
+        $this->Session->setFlash('Você agora é responsável pela revisão da seguinte matéria: '.$this->Post->field('title'));
         $this->redirect(array("action"=>"index"));
+    }
+
+    public function saveEvent($post_id, $user_id, $state){
+        $this->Event->create();
+        $event = array('Event' => array(
+          'post_id' => $post_id, 
+          'user_id' => $user_id,
+          'state' => $state
+        )); 
+        $this->Event->save($event);
     }
 
     //Nós estamos sobreescrevendo a chamada do isAuthorized() do AppController e 
@@ -314,7 +325,7 @@ class PostsController extends AppController {
                 return true;
             }
 
-            if (in_array($this->request->action, ['edit', 'view', 'delete'])) {
+            if (in_array($this->request->action, ['edit', 'view'])) {
                 $postId = (int)$this->request->params['pass'][0];
                 if ($this->Post->isAuthor($postId, $user['id'])) {
                     return true;
@@ -388,7 +399,7 @@ class PostsController extends AppController {
                 return true;
             }
 
-            if (in_array($this->request->action, ['view','delete'])) {
+            if (in_array($this->request->action, ['view','edit'])) {
                 $postId = (int)$this->request->params['pass'][0];
                 if ($this->Post->isManager($postId, $user['section'])) {
                     return true;
@@ -402,15 +413,5 @@ class PostsController extends AppController {
         }
 
         return parent::isAuthorized($user);
-    }
-
-    public function saveEvent($post_id, $user_id, $state){
-        $this->Event->create();
-        $event = array('Event' => array(
-          'post_id' => $post_id, 
-          'user_id' => $user_id,
-          'state' => $state
-        )); 
-        $this->Event->save($event);
     }
 }

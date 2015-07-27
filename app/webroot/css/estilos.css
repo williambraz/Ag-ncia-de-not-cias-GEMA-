@@ -23,14 +23,22 @@ form .submit input[type=submit]:hover {
 	font-weight: bold;
 }
 
-h1{
-	font-size: 26px;
-	background-color: #ecf0f5;
+h1, h2{
+	font-size: 18px;
+}
+
+.info .basic_content .btn-publicador{
+	margin-top: 15px;
 }
 
 /*.box{
 	background-color: #ecf0f5;
 }*/
+
+.home h1{
+	font-size: 26px;
+	background-color: #ecf0f5;
+}
 
 .titulo{
 	margin: 20px auto 30px auto;
@@ -39,6 +47,10 @@ h1{
 .btn-adicionar-materia{
 	text-align: right;
 	margin-bottom: -2px;
+}
+
+.btn-success{
+	margin-right: 10px;
 }
 
 .clear{
@@ -96,7 +108,7 @@ h1{
 	color: #000;
 }
 
-.comments{
+.comments, .events{
 	margin-bottom: 20px;
 }
 
@@ -277,10 +289,6 @@ img.fr-dib {
 
 	.search-form{
 		margin-top: 15px;
-	}
-
-	h1{
-		font-size: 22px;
 	}
 }
 
