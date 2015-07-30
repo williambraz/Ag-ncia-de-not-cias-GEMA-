@@ -9,7 +9,7 @@
 <div class="box box-primary">
   <div class="box-header">
     <h3 class="box-title">Matérias</h3>
-    <div class="filtros center">
+    <div class="filtros center hidden-xs">
         <?php if ($this->session->read('Auth.User.role') == "gerente") : 
                 echo "<h1>Seção de " . $this->session->read('Auth.User.section') . " </h1>";
             else : 
@@ -18,6 +18,7 @@
                 <button id="btn-games" class="btn btn-primary">Games</button>
                 <button id="btn-filmes" class="btn btn-primary">Séries</button>
                 <button id="btn-hq" class="btn btn-primary">Quadrinhos</button>
+                <button id="btn-musica" class="btn btn-primary">Música</button>
                 <button id="btn-geral" class="btn btn-primary">Geral</button>
         <?php
             endif; 
@@ -144,11 +145,15 @@ $(document).ready(function(){
     });
 
     $('#btn-filmes').click(function(event) {
-        tabela.fnFilter( 'séries',5 );
+        tabela.fnFilter( 'series',5 );
     });
 
     $('#btn-hq').click(function(event) {
         tabela.fnFilter( 'quadrinhos',5 );
+    });
+
+    $('#btn-musica').click(function(event) {
+        tabela.fnFilter( 'musica',5 );
     });
 
     $('#btn-geral').click(function(event) {
