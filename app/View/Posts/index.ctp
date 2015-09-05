@@ -2,6 +2,7 @@
 
 <div class='btn-adicionar-materia'>
     <?php if ($this->session->read('Auth.User.role') == "jornalista")
+            echo '<button id="btn-minhas-materias" class="btn btn-primary">Minhas matérias</button>';
             echo $this->Html->link('Adicionar matéria', array('controller' => 'posts', 'action' => 'add'),array('class'=>'btn btn-primary'));
     ?>
 </div>
@@ -108,6 +109,24 @@
 </div><!-- /.box -->
 
 <script>
+//salva nome do usuário logado na sessão para uso no filtro de matérias
+var user = <?php echo json_encode($this->session->read('Auth.User.name'))?>;
+
+//cria evento de switch de click
+$.fn.clicktoggle = function(a, b) {
+    return this.each(function() {
+        var clicked = false;
+        $(this).click(function() {
+            if (clicked) {
+                clicked = false;
+                return b.apply(this, arguments);
+            }
+            clicked = true;
+            return a.apply(this, arguments);
+        });
+    });
+};
+
 $(document).ready(function(){
 
     $.fn.dataTable.moment( 'D/M/YYYY - H:m:s' );
@@ -141,23 +160,31 @@ $(document).ready(function(){
     });
     
     $('#btn-games').click(function(event) {
-        tabela.fnFilter( 'games',5 );
+        tabela.fnFilter('games',5);
     });
 
     $('#btn-filmes').click(function(event) {
-        tabela.fnFilter( 'series',5 );
+        tabela.fnFilter('series',5);
     });
 
     $('#btn-hq').click(function(event) {
-        tabela.fnFilter( 'quadrinhos',5 );
+        tabela.fnFilter('quadrinhos',5);
     });
 
     $('#btn-musica').click(function(event) {
-        tabela.fnFilter( 'musica',5 );
+        tabela.fnFilter('musica',5);
     });
 
     $('#btn-geral').click(function(event) {
-        tabela.fnFilter( '',5 );
+        tabela.fnFilter('',5);
+    });
+
+    $('#btn-minhas-materias').clicktoggle(function() {
+        $(this).css('background', '#666');
+        tabela.fnFilter(user,2);
+    }, function() {
+        $(this).css('background', '#333');
+        tabela.fnFilter('',2);
     });
 });
 </script>
