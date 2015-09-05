@@ -1,9 +1,10 @@
 <!-- File: /app/View/Posts/index.ctp -->
 
 <div class='btn-adicionar-materia'>
-    <?php if ($this->session->read('Auth.User.role') == "jornalista")
-            echo '<button id="btn-minhas-materias" class="btn btn-primary">Minhas matérias</button>';
+    <button id="btn-minhas-materias" class="btn btn-primary">Minhas matérias</button>
+    <?php if ($this->session->read('Auth.User.role') == "jornalista"){
             echo $this->Html->link('Adicionar matéria', array('controller' => 'posts', 'action' => 'add'),array('class'=>'btn btn-primary'));
+        }
     ?>
 </div>
 
@@ -111,6 +112,7 @@
 <script>
 //salva nome do usuário logado na sessão para uso no filtro de matérias
 var user = <?php echo json_encode($this->session->read('Auth.User.name'))?>;
+var role = <?php echo json_encode($this->session->read('Auth.User.role'))?>;
 
 //cria evento de switch de click
 $.fn.clicktoggle = function(a, b) {
@@ -181,10 +183,31 @@ $(document).ready(function(){
 
     $('#btn-minhas-materias').clicktoggle(function() {
         $(this).css('background', '#666');
-        tabela.fnFilter(user,2);
+        switch (role){
+            case 'jornalista':
+                tabela.fnFilter(user,2);
+            break;
+            case 'revisor':
+                tabela.fnFilter(user,3);
+            break;
+            case 'publicador':
+                tabela.fnFilter(user,4);
+            break;
+        }
+        
     }, function() {
         $(this).css('background', '#333');
-        tabela.fnFilter('',2);
+        switch (role){
+            case 'jornalista':
+                tabela.fnFilter('',2);
+            break;
+            case 'revisor':
+                tabela.fnFilter('',3);
+            break;
+            case 'publicador':
+                tabela.fnFilter('',4);
+            break;
+        }
     });
 });
 </script>
